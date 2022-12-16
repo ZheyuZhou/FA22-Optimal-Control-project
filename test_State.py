@@ -31,7 +31,7 @@ class State:
     def nxtPositionProb(self):
         return 0
 
-    def nxtPosition(self, action):
+    def nxtPosition(self, action, MoveProbMat):
         """
         action: up, down, left, right
         -------------
@@ -45,14 +45,46 @@ class State:
             # call nxtPositionProb
 
             if action == "up":
-                nxtState = (self.state[0] - 1, self.state[1])
-                print(self.state, 'self.state, up', type(self.state))
+                row = 2
+
+                # MoveProb = np.max(MoveProbMat[row])
+                StayProb = np.sort(MoveProbMat[row])[-2]
+                if np.random.uniform(0,1,1) < StayProb:
+                    nxtState = (self.state[0], self.state[1])
+                else:
+                    nxtState = (self.state[0] - 1, self.state[1])
+
+                # print(self.state, 'self.state, up', type(self.state))
+
             elif action == "down":
-                nxtState = (self.state[0] + 1, self.state[1])
+                row = 3
+
+                # MoveProb = np.max(MoveProbMat[row])
+                StayProb = np.sort(MoveProbMat[row])[-2]
+                if np.random.uniform(0,1,1) < StayProb:
+                    nxtState = (self.state[0], self.state[1])
+                else:
+                    nxtState = (self.state[0] + 1, self.state[1])
+                    
             elif action == "left":
-                nxtState = (self.state[0], self.state[1] - 1)
+                row = 0
+
+                # MoveProb = np.max(MoveProbMat[row])
+                StayProb = np.sort(MoveProbMat[row])[-2]
+                if np.random.uniform(0,1,1) < StayProb:
+                    nxtState = (self.state[0], self.state[1])
+                else:
+                    nxtState = (self.state[0], self.state[1] - 1)
             else:
-                nxtState = (self.state[0], self.state[1] + 1)
+                row = 1
+
+                # MoveProb = np.max(MoveProbMat[row])
+                StayProb = np.sort(MoveProbMat[row])[-2]
+                if np.random.uniform(0,1,1) < StayProb:
+                    nxtState = (self.state[0], self.state[1])
+                else:
+                    nxtState = (self.state[0], self.state[1] + 1)
+
             # if next state legal
             if (nxtState[0] >= 0) and (nxtState[0] <= (BOARD_ROWS -1)):
                 if (nxtState[1] >= 0) and (nxtState[1] <= (BOARD_COLS -1)):
