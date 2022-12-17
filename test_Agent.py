@@ -42,7 +42,7 @@ class Agent:
 
         currentPosition = self.State.state
 
-        Bed, Liv, Entr, Kit, Din, Off = test_MoveProb.MoveProb()
+        Bed, Liv, Entr, Din, Off = test_MoveProb.MoveProb()
 
         if currentPosition == (0,1): # Bed
             MoveProbMat = Bed
@@ -56,7 +56,7 @@ class Agent:
             MoveProbMat = Off
         return MoveProbMat
 
-    def chooseAction(self):
+    def chooseAction(self, MoveProbMat):
         # choose action with most expected value
         mx_nxt_reward = 0
         action = ""
@@ -67,7 +67,7 @@ class Agent:
             # greedy action
             for a in self.actions:
                 # if the action is deterministic
-                nxt_reward = self.state_values[self.State.nxtPosition(a)]
+                nxt_reward = self.state_values[self.State.nxtPosition(a, MoveProbMat)]
                 if nxt_reward >= mx_nxt_reward:
                     action = a
                     mx_nxt_reward = nxt_reward
@@ -83,6 +83,7 @@ class Agent:
 
     def play(self, rounds=10):
         i = 0
+        MoveProbMat = self.checkRoomMoveProb()
         while i < rounds:
             # to the end of game back propagate reward
             if self.State.isEnd:
@@ -97,12 +98,12 @@ class Agent:
                 self.reset()
                 i += 1
             else:
-                action = self.chooseAction()
+                action = self.chooseAction(MoveProbMat)
                 # append trace
-                self.states.append(self.State.nxtPosition(action))
+                self.states.append(self.State.nxtPosition(action, MoveProbMat))
                 print("current position {} action {}".format(self.State.state, action))
                 # by taking the action, it reaches the next state
-                self.State = self.takeAction(action)
+                self.State = self.takeAction(action, MoveProbMat)
                 # mark is end
                 self.State.isEndFunc()
                 print("nxt state", self.State.state)

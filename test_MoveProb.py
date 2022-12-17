@@ -31,13 +31,13 @@ def MoveProb():
         [0, 0, 0, 0.3, 0, 0, 0, 0.7] #D
     ])
 
-    Kit = np.array([
-    #   S	Bed	 L 	E	K	D	O	Bath
-        [0, 0, 0, 0, 1, 0, 0, 0], # L
-        [0, 0, 0, 0, 0.3, 0.7, 0, 0], # R
-        [0.7, 0, 0, 0, 0.3, 0, 0, 0], # U
-        [0, 0, 0, 0, 1, 0, 0, 0] #D
-    ])
+    # Kit = np.array([
+    # #   S	Bed	 L 	E	K	D	O	Bath
+    #     [0, 0, 0, 0, 1, 0, 0, 0], # L
+    #     [0, 0, 0, 0, 0.3, 0.7, 0, 0], # R
+    #     [0.7, 0, 0, 0, 0.3, 0, 0, 0], # U
+    #     [0, 0, 0, 0, 1, 0, 0, 0] #D
+    # ])
 
     Din = np.array([
     #   S	Bed	 L 	E	K	D	O	Bath
@@ -62,4 +62,4 @@ def MoveProb():
     # P_trainstion_U = np.vstack((Liv[2], Off[2], Bed[2], Din[2], Kit[2]))
     # P_trainstion_D = np.vstack((Liv[3], Off[3], Bed[3], Din[3], Kit[3]))
 
-    return Bed, Liv, Entr, Kit, Din, Off
+    return Bed, Liv, Entr, Din, Off
