@@ -6,6 +6,6 @@ import test_Agent
 
 if __name__ == "__main__":
     ag = test_Agent.Agent()
-    ag.play(50)
+    ag.play(60)
     print(ag.showValues())
     
