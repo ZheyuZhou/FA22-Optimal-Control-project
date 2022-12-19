@@ -1,4 +1,7 @@
 import numpy as np
+import matplotlib
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 import test_State
 import test_MoveProb
@@ -117,3 +120,27 @@ class Agent:
                 out += str(self.state_values[(i, j)]).ljust(6) + ' | '
             print(out)
         print('----------------------------------')
+
+    def showValuePlot(self):
+        output_Val = []
+        for i in range(0, BOARD_ROWS):
+            for j in range(0, BOARD_COLS):
+                output_Val.append(self.state_values[(i, j)])
+        output_Val = np.array(output_Val)
+        output_Val = np.reshape(output_Val,(2,4))
+        print(output_Val)
+
+        fig, ax = plt.subplots()
+        im = ax.imshow(output_Val)
+
+        ax.set_xticks(np.arange(4))
+        ax.set_yticks(np.arange(2))
+
+        for i in range(2):
+            for j in range(4):
+                text = ax.text(j, i, output_Val[i, j],
+                            ha="center", va="center", color="w")
+                            
+        ax.set_title("Expected Value After Iterations")
+        fig.tight_layout()
+        plt.show()
