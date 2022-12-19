@@ -23,7 +23,7 @@ class Agent:
         self.states = []
         self.actions = ["up", "down", "left", "right"]
         self.State = test_State.State()
-        self.lr = 0.2 # gamma discount factor
+        self.lr = 0.5 # gamma discount factor
         self.exp_rate = 0.3
 
         # initial state reward
@@ -123,6 +123,9 @@ class Agent:
 
     def showValuePlot(self):
         output_Val = []
+
+        room = ["Bottom: Kitcken | Top: Stairs", "Bottom: Dinning room | Top: Bedroom", "Bottom: Office | Top: Living room", "Bottom:Bathroom | Top: Entrance"]
+
         for i in range(0, BOARD_ROWS):
             for j in range(0, BOARD_COLS):
                 output_Val.append(self.state_values[(i, j)])
@@ -133,14 +136,18 @@ class Agent:
         fig, ax = plt.subplots()
         im = ax.imshow(output_Val)
 
-        ax.set_xticks(np.arange(4))
+        ax.set_xticks(np.arange(len(room)))
+        ax.set_xticklabels(room)
         ax.set_yticks(np.arange(2))
+
+        plt.setp(ax.get_xticklabels(), rotation=20, ha="right",
+         rotation_mode="anchor")
 
         for i in range(2):
             for j in range(4):
                 text = ax.text(j, i, output_Val[i, j],
                             ha="center", va="center", color="w")
-                            
-        ax.set_title("Expected Value After Iterations")
+
+        ax.set_title("Expected Value After " + "50" + " Iterations with Discount Factor = " + "0.5" )
         fig.tight_layout()
         plt.show()
