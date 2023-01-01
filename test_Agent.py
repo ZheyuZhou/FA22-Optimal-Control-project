@@ -23,7 +23,7 @@ class Agent:
         self.states = []
         self.actions = ["up", "down", "left", "right"]
         self.State = test_State.State()
-        self.lr = 0.5 # gamma discount factor
+        self.lr = 0.2 # gamma discount factor
         self.exp_rate = 0.3
 
         # initial state reward
@@ -94,7 +94,7 @@ class Agent:
                 reward = self.State.giveReward()
                 # explicitly assign end state to reward values
                 self.state_values[self.State.state] = reward  # this is optional
-                print("Game End Reward", reward)
+                # print("Game End Reward", reward)
                 for s in reversed(self.states):
                     reward = self.state_values[s] + self.lr * (reward - self.state_values[s])
                     self.state_values[s] = round(reward, 3)
@@ -104,22 +104,22 @@ class Agent:
                 action = self.chooseAction(MoveProbMat)
                 # append trace
                 self.states.append(self.State.nxtPosition(action, MoveProbMat))
-                print("current position {} action {}".format(self.State.state, action))
+                # print("current position {} action {}".format(self.State.state, action))
                 # by taking the action, it reaches the next state
                 self.State = self.takeAction(action, MoveProbMat)
                 # mark is end
                 self.State.isEndFunc()
-                print("nxt state", self.State.state)
-                print("---------------------")
+                # print("nxt state", self.State.state)
+                # print("---------------------")
 
     def showValues(self):
         for i in range(0, BOARD_ROWS):
-            print('----------------------------------')
-            out = '| '
+            # print('----------------------------------')
+            # out = '| '
             for j in range(0, BOARD_COLS):
                 out += str(self.state_values[(i, j)]).ljust(6) + ' | '
-            print(out)
-        print('----------------------------------')
+            # print(out)
+        # print('----------------------------------')
 
     def showValuePlot(self):
         output_Val = []
@@ -131,7 +131,7 @@ class Agent:
                 output_Val.append(self.state_values[(i, j)])
         output_Val = np.array(output_Val)
         output_Val = np.reshape(output_Val,(2,4))
-        print(output_Val)
+        # print(output_Val)
 
         fig, ax = plt.subplots()
         im = ax.imshow(output_Val)
@@ -148,6 +148,6 @@ class Agent:
                 text = ax.text(j, i, output_Val[i, j],
                             ha="center", va="center", color="w")
 
-        ax.set_title("Expected Value After " + "50" + " Iterations with Discount Factor = " + "0.5" )
+        ax.set_title("Expected Value After " + "15" + " Iterations with Discount Factor = " + "0.2" )
         fig.tight_layout()
         plt.show()
